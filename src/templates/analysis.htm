@@ -1,0 +1,16 @@
+{% extends "_base.htm" %}
+
+{% block title %}
+    Risk analysis details
+{% endblock %}
+
+{% block pageblock %}
+    <div id="up">
+        <h1>Risk analysis {{ analysis.get('id') }}, {{ analysis.get('report_name') }}<br/></h1>
+        <img src="data:image/png;base64,{{ ts_chart }}"\>
+        <h2>Total P/L: {{ total_p_l }}<br/></h2>
+        <h2>Trading signals table:<br/></h2>
+        <div>{{ sig_table|safe }}</div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "_base.htm" %}
+
+{% block title %}
+    Risk analyses
+{% endblock %}
+
+{% block pageblock %}
+    <div id="up">
+        <h1>Available risk analyses:<br/></h1>
+        <h4>Click on id to show details of the risk analysis<br/></h4>
+        <table id="analyses-table">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            {% for analysis in analyses %}
+            <tr>
+                <td><a href="/analyses/{{ analysis.get('id') }}">{{ analysis.get('id') }}</a></td>
+                <td>{{ analysis.get('asset_name') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

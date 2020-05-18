@@ -1,0 +1,26 @@
+{% extends "_base.htm" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block pageblock %}
+    <div id="up">
+        <h1>Available assets:<br/></h1>
+        <table id="assets-table">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+            {% for asset in assets %}
+            <tr>
+                <td>{{ asset.get('id') }}</td>
+                <td>{{ asset.get('asset_name') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% include 'form.htm' %}
+
+{% endblock %}

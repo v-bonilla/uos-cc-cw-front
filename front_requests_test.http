@@ -1,0 +1,37 @@
+GET http://localhost:8080/
+Accept: application/json
+
+###
+
+GET http://localhost:8080/analyses
+Accept: application/json
+
+###
+
+POST http://localhost:8080/analyses
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="id"
+
+1
+--WebAppBoundary--
+Content-Disposition: form-data; name="ma-period"
+
+20
+--WebAppBoundary--
+
+###
+Content-Type: application/json
+
+{
+  "id": 1,
+  "ma_period": 20
+}
+
+###
+
+GET http://localhost:8080/analyses/1
+Accept: application/json
+
+###
