@@ -55,21 +55,28 @@ def get_analysis(id):
     analysis = json.loads(response.read().decode())
     df = pd.read_json(json.dumps(analysis.get('data')))
     ts_chart = analysis_to_base64_chart(df)
-    sig_df = df.loc[df['sig'].notna() & (df['sig'] != 0), ['Date', 'sig', 'p_l']]
+    total_p_l = None
+    avg_var = None
+    if 'average_var' in analysis:
+        total_p_l = analysis.get('total_p_l')
+        avg_var = analysis.get('average_var')
+        sig_df = df.loc[df['var_95'].notna(), ['Date', 'sig', 'p_l', 'var_95', 'var_99']]
+    else:
+        sig_df = df.loc[df['sig'].notna() & (df['sig'] != 0), ['Date', 'sig', 'p_l']]
     sig_df['sig'] = sig_df['sig'].map({1: 'Buy', -1: 'Sell'}, na_action='ignore')
     sig_html = sig_df.to_html()
-    total_p_l = df['p_l'].sum()
     del (analysis['data'])
     return doRender('analysis.htm',
-                    {'analysis': analysis, 'ts_chart': ts_chart, 'sig_table': sig_html, 'total_p_l': total_p_l})
+                    {'analysis': analysis, 'ts_chart': ts_chart, 'total_p_l': total_p_l, 'avg_var': avg_var,
+                     'sig_table': sig_html})
 
 
 def analysis_to_base64_chart(df):
     plt.figure()
     plt.plot(df['Date'], df['Adj Close'], label='Adj Close')
-    plt.plot(df['Date'], df['ma'], color='yellow', label='Moving Average')
+    plt.plot(df['Date'], df['ma'], color='magenta', label='Moving Average')
     date_last_position = df.loc[df['sig'].notna() & (df['sig'] != 0), 'Date'].iloc[-1]
-    plt.axvline(x=date_last_position, color='red', label='Last trading position')
+    plt.axvline(x=date_last_position, color='#c77a24', label='Last trading position')
     plt.legend()
     fig_file = BytesIO()
     plt.savefig(fig_file, format='png')
@@ -83,11 +90,13 @@ def analysis_to_base64_chart(df):
 @app.route('/analyses', methods=['POST'])
 def post_analysis():
     if request.method == 'POST':
-        id = request.form.get('id')
-        ma_period = request.form.get('ma-period')
         payload = {
-            'id': id,
-            'ma_period': ma_period
+            'id': request.form.get('id'),
+            'ma_period': request.form.get('ma-period'),
+            'var_window': request.form.get('var-window'),
+            'mc_samples': request.form.get('mc-samples'),
+            'scalable_services': request.form.get('scalable-services'),
+            'parallel_resources': request.form.get('parallel-resources')
         }
         body = json.dumps(payload)
         c = HTTPSConnection(api_endpoint)

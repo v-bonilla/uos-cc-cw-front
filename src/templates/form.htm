@@ -6,7 +6,15 @@
             <option value="{{ asset.get('id') }}">{{ asset.get('id') }} - {{ asset.get('asset_name') }}</option>
             {% endfor %}
         </select><br/></h3>
-        <h3>Moving average period: <input type="number" name="ma-period"/><br/></h3>
+        <h3>Moving average period (in days): <input type="number" name="ma-period" value="20"/><br/></h3>
+        <h3>VAR period: <input type="number" name="var-window" value="101"/><br/></h3>
+        <h3>Monte Carlo samples (in days): <input type="number" name="mc-samples" value="1000"/><br/></h3>
+        <h3>Use scalable services for VAR?
+        <input type="radio" id="yes" name="scalable-services" value="1"/>
+        <label for="yes">Yes</label>
+        <input type="radio" id="no" name="scalable-services" value="0" checked="checked"/>
+        <label for="no">No</label><br/></h3>
+        <h3>If yes, how many parallel resources for VAR: <input type="number" name="parallel-resources" value="1"/><br/></h3>
         <h3><input type="submit" name="draw" value="Submit"/><br/></h3>
     </form>
 </div>

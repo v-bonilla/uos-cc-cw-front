@@ -8,7 +8,12 @@
     <div id="up">
         <h1>Risk analysis {{ analysis.get('id') }}, {{ analysis.get('report_name') }}<br/></h1>
         <img src="data:image/png;base64,{{ ts_chart }}"\>
+        {% if avg_var %}
         <h2>Total P/L: {{ total_p_l }}<br/></h2>
+        <h2>Average VAR: {{ avg_var }}<br/></h2>
+        {% else %}
+        <div id="msg"><h2>P/L and VAR calculations are still running. Please, grab a cup of tea and refresh the page in a few minutes.</h2></div><br/>
+        {% endif %}
         <h2>Trading signals table:<br/></h2>
         <div>{{ sig_table|safe }}</div>
     </div>
