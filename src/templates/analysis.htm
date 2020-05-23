@@ -8,7 +8,7 @@
     <div id="up">
         <h1>Risk analysis {{ analysis.get('id') }}, {{ analysis.get('report_name') }}<br/></h1>
         <img src="data:image/png;base64,{{ ts_chart }}"\>
-        {% if avg_var %}
+        {% if avg_var_95 %}
         <h2>Total P/L: {{ total_p_l }}<br/></h2>
         <h2>Average VAR 95: {{ avg_var_95 }}<br/></h2>
         <h2>Average VAR 99: {{ avg_var_99 }}<br/></h2>
