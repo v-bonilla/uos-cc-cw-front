@@ -56,10 +56,12 @@ def get_analysis(id):
     df = pd.read_json(json.dumps(analysis.get('data')))
     ts_chart = analysis_to_base64_chart(df)
     total_p_l = None
-    avg_var = None
-    if 'average_var' in analysis:
+    avg_var_95 = None
+    avg_var_99 = None
+    if 'average_var_95' in analysis:
         total_p_l = analysis.get('total_p_l')
-        avg_var = analysis.get('average_var')
+        avg_var_95 = analysis.get('average_var_95')
+        avg_var_99 = analysis.get('average_var_99')
         sig_df = df.loc[df['var_95'].notna(), ['Date', 'sig', 'p_l', 'var_95', 'var_99']]
     else:
         sig_df = df.loc[df['sig'].notna() & (df['sig'] != 0), ['Date', 'sig', 'p_l']]
@@ -67,8 +69,8 @@ def get_analysis(id):
     sig_html = sig_df.to_html()
     del (analysis['data'])
     return doRender('analysis.htm',
-                    {'analysis': analysis, 'ts_chart': ts_chart, 'total_p_l': total_p_l, 'avg_var': avg_var,
-                     'sig_table': sig_html})
+                    {'analysis': analysis, 'ts_chart': ts_chart, 'total_p_l': total_p_l, 'avg_var_95': avg_var_95,
+                     'avg_var_99': avg_var_99, 'sig_table': sig_html})
 
 
 def analysis_to_base64_chart(df):

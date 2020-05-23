@@ -10,7 +10,8 @@
         <img src="data:image/png;base64,{{ ts_chart }}"\>
         {% if avg_var %}
         <h2>Total P/L: {{ total_p_l }}<br/></h2>
-        <h2>Average VAR: {{ avg_var }}<br/></h2>
+        <h2>Average VAR 95: {{ avg_var_95 }}<br/></h2>
+        <h2>Average VAR 99: {{ avg_var_99 }}<br/></h2>
         {% else %}
         <div id="msg"><h2>P/L and VAR calculations are still running. Please, refresh the page in a few minutes.</h2></div><br/>
         {% endif %}
