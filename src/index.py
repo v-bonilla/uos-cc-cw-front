@@ -10,7 +10,7 @@ import pandas as pd
 from flask import Flask, request, render_template, redirect, url_for
 
 app = Flask(__name__)
-api_endpoint = 'b6i1zus2hf.execute-api.us-east-1.amazonaws.com'
+api_endpoint = 'qdk67n9gl2.execute-api.us-east-1.amazonaws.com'
 
 
 def doRender(tname, values={}):
